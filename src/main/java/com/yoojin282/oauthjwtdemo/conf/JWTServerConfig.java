@@ -41,7 +41,7 @@ public class JWTServerConfig extends AuthorizationServerConfigurerAdapter {
 			.secret("{noop}test-client-secret")
 			.accessTokenValiditySeconds(60 * 10)
 			.refreshTokenValiditySeconds(60 * 30)
-			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "refersh_token")
+			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "refresh_token")
 			.scopes("read", "write");
 	}
 	
