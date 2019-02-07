@@ -53,15 +53,6 @@ public class JWTServerConfigTest {
 	}
 	
 	@Test
-	public void testAccessWithJWT() throws Exception {
-		mvc.perform(get("/imgroot")
-				.header("Authorization", 
-						"Bearer " + obtainAccessToken("testuser", "testpassword").get("access_token")))
-			.andExpect(status().isOk())
-			.andExpect(content().string("imgroot"));
-	}
-	
-	@Test
 	public void testRefreshToken() throws Exception {
 		
 		Map<String, Object> result = obtainAccessToken("testuser", "testpassword");

@@ -1,5 +1,4 @@
 security:
-  oauth2:
-    resource:
-      jwt:
+  oauth2:    authorization:      jwt:
         key-value: testkey
+    resource:      jwt:        key-value: testkey    logging:  level:    web: DEBUG

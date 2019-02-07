@@ -1,6 +1,8 @@
 package com.yoojin282.oauthjwtdemo.conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,12 +20,15 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 @EnableResourceServer
+@EnableConfigurationProperties(AuthorizationServerProperties.class)
 public class JWTServerConfig extends AuthorizationServerConfigurerAdapter {
-	
+	@Autowired
+	private AuthorizationServerProperties properties;
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -42,6 +47,8 @@ public class JWTServerConfig extends AuthorizationServerConfigurerAdapter {
 			.accessTokenValiditySeconds(60 * 10)
 			.refreshTokenValiditySeconds(60 * 30)
 			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "refresh_token")
+			.redirectUris("http://localhost:8081/login")
+			.autoApprove(true)
 			.scopes("read", "write");
 	}
 	
@@ -60,7 +67,7 @@ public class JWTServerConfig extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey("testkey");
+		converter.setSigningKey(properties.getJwt().getKeyValue());
 		return converter;
 	}
 

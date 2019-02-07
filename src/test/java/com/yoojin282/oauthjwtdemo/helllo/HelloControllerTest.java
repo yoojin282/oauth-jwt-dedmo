@@ -1,7 +1,6 @@
 package com.yoojin282.oauthjwtdemo.helllo;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,15 +22,13 @@ public class HelloControllerTest {
 	public void test() throws Exception {
 		mvc.perform(get("/hello"))
 			.andExpect(status().isOk())
-			.andExpect(content().string("hello"))
-			.andDo(print());
+			.andExpect(content().string("hello"));
 	}
 	
 	@Test
 	public void testImGroot_noCredential() throws Exception {
 		mvc.perform(get("/imgroot"))
-			.andExpect(status().isForbidden())
-			.andDo(print());
+			.andExpect(status().is3xxRedirection());
 	}
 	
 	@Test
@@ -39,8 +36,7 @@ public class HelloControllerTest {
 	public void testImGroot_withCredential() throws Exception {
 		mvc.perform(get("/imgroot"))
 			.andExpect(status().isOk())
-			.andExpect(content().string("imgroot"))
-			.andDo(print());
+			.andExpect(content().string("imgroot"));
 	}
 
 }
