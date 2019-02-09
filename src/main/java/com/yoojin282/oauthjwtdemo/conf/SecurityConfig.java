@@ -25,17 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.httpBasic().disable()
 			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/hello").permitAll()
+				.antMatchers("/hello", "/exit").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/login")	
 				.loginProcessingUrl("/login")
 				.failureUrl("/login?error")				
-				.permitAll()
-				.and()
-			.logout()
 				.permitAll();
+				
 	}
 	
 	@Override

@@ -1,7 +1,6 @@
 package com.yoojin282.oauthjwtdemo.user;
 
-import java.security.Principal;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 	@GetMapping("/users/me")
-	public Principal me(Principal principal) {
-		return principal;
+	public UserDTO.Response me(Authentication auth) {
+		
+		return new UserDTO.Response(auth.getName(), auth.getAuthorities());
 	}
 }
